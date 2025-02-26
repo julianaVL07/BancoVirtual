@@ -103,9 +103,6 @@ public class Banco {
             int digito = (int) (Math.random() * 10); // Genera un número entre 0 y 9
             numeroAleatorio+=digito; // Concatena el dígito al String
         }
-        if (numeroAleatorio.length() != 10) {
-            throw new Exception("El número generado no tiene 10 dígitos.");
-        }
 
         return numeroAleatorio;
 
@@ -133,5 +130,16 @@ public class Banco {
                 .findFirst()
                 .orElse(null);
 
+    }
+
+    public Billetera obtenerBilleteraUsuario(String idUsuario){
+        // Buscar la billetera con el número dado
+        for(Billetera b : billeteras){
+            if(b.getUsuario().getId().equals(idUsuario)){
+                return b;
+            }
+        }
+
+        return null;
     }
 }

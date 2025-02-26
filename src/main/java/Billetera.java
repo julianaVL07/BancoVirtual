@@ -8,18 +8,18 @@ public class Billetera {
     private Usuario usuario;
     private ArrayList<Transaccion> transacciones;
 
-    public Billetera( Usuario usuario, float saldo, String nombre) {
+    public Billetera( Usuario usuario,String numero, float saldo) {
         this.transacciones = new ArrayList<>();
         this.usuario = usuario;
         this.saldo = saldo;
-        this.numero = nombre;
+        this.numero = numero;
     }
 
     public String getNumero() {
         return numero;
     }
 
-    public void setNombre(String numero) {
+    public void setNumero(String numero) {
         this.numero = numero;
     }
 
@@ -56,6 +56,31 @@ public class Billetera {
                 ", transacciones =" + transacciones +
                 '}';
     }
+
+    //realizar transacción
+    public boolean boolean realizarTransaccion(Billetera destinatario, float monto, String categoria)throws Exception {
+        if (destinatario == null) {
+            throw new Exception("La billetera destinataria no existe");
+        }
+        if (monto<0) {
+            throw new Exception("El monto debe ser positivo");
+        }
+        if  ((saldo < (monto + costo)){
+                throw new Exception("Saldo insuficiente para realizar la transacción");
+            }
+
+    //actualizar saldo en ambas billeteras
+        this.saldo-=(monto+costo);
+        destinatario.saldo+=monto;
+
+    //registrar trasaccion
+        Transaccion transaccion = new Transaccion(Transaccion.getid(),destinatario, monto, LocalDateTime.now(), categoria);
+        this.transacciones.add(transaccion);
+        destinatario.transacciones.add(transaccion);
+
+        return true;
+    }
+
 
     //Metodo para actualizar el saldo
         public float getSaldoActualizado(float monto) {
@@ -94,7 +119,7 @@ public class Billetera {
             return new float[]{porcentajeIngresos, porcentajeEgresos};
         }
 
-        //  Consultar el saldo con id y fecha
+        //  Consultar transacciones con id y fecha
         public ArrayList<Transaccion> getTransaccionesPorIdYFecha(String id, LocalDateTime fecha) {
             ArrayList<Transaccion> resultado = new ArrayList<>();
 

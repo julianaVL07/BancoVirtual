@@ -17,9 +17,6 @@ public class Transaccion {
         this.categoria = categoria;
     }
 
-    public Transaccion(String idTransaccion, float monto, LocalDateTime now, Categoria categoria, Object destino, Billetera billetera) {
-    }
-
     public String getIdTransaccion() {
         return idTransaccion;
     }
