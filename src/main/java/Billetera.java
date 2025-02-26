@@ -131,27 +131,9 @@ public class Billetera {
             float porcentajeIngresos = total > 0 ? (ingresos / total) * 100 : 0;
             float porcentajeEgresos = total > 0 ? (egresos / total) * 100 : 0;
 
-            return new floa[]t{porcentajeIngresos, porcentajeEgresos};
+            return new float[]{porcentajeIngresos, porcentajeEgresos};
         }
 
-        //  Consultar transacciones con id y fecha
-        public ArrayList<Transaccion> getTransaccionesPorIdYFecha(String id, LocalDateTime fecha) {
-            ArrayList<Transaccion> resultado = new ArrayList<>();
-
-            for (Transaccion transaccion : transacciones) {
-                if (transaccion.getIdTransaccion().equals(id) && transaccion.getFecha().toLocalDate().equals(fecha.toLocalDate())) {
-                    resultado.add(transaccion);
-                }
-            }
-            return resultado;
-        }
-        //Metodo para consultar el saldo
-        public Float getSaldoPorIdYContrasena(String id, String password) {
-            if (usuario.getId().equals(id) && usuario.getPassword().equals(password)) {
-                return saldo;
-            }
-            return null; // Retorna null si la autenticación falla
-        }
 
 
 

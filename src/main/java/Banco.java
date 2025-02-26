@@ -71,7 +71,7 @@ public class Banco {
     public void actualizarUsuario(Usuario nuevoUsuario) throws Exception{
         Usuario usuarioBuscado = obtenerUsuario(nuevoUsuario.getId());
 
-        // Si el estudiante no existe, lanzar una excepción
+        // Si el usuario no existe, lanzar una excepción
         if(usuarioBuscado!=null){
             usuarioBuscado.setNombre(nuevoUsuario.getNombre());
             usuarioBuscado.setDireccion(nuevoUsuario.getDireccion());
@@ -96,7 +96,9 @@ public class Banco {
         }
     }
 
-    public String  generarNumeroAleatorioBilletera() throws Exception{
+
+    //Metodo para generar numero aleatorio con billetera
+    public String  generarNumeroAleatorioBilletera() {
 
         String numeroAleatorio="";
         for (int i=0; i <=9; i++){
@@ -121,7 +123,7 @@ public class Banco {
         }
 
     }
-
+    //Obtener billetera
     public Billetera obtenerBilletera(String numero){
         // Buscar la billetera con el número dado
         return billeteras

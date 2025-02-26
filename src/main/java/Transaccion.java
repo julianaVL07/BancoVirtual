@@ -1,4 +1,5 @@
 import java.time.LocalDateTime;
+import java.util.UUID;
 
 public class Transaccion {
     private String idTransaccion;
@@ -77,5 +78,14 @@ public class Transaccion {
                 '}';
     }
 
+    public String generarIdTransaccion() {
+        UUID uuid = UUID.randomUUID();
+
+        // Convertir el UUID a una cadena sin guiones
+        String uuidString = uuid.toString().replace("-", "");
+
+        // Tomar los primeros 10 caracteres
+        return uuidString.substring(0, 10);
+    }
 
 }
