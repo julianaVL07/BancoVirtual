@@ -58,7 +58,7 @@ public class Billetera {
     }
 
     //realizar transacción
-    public boolean boolean realizarTransaccion(Billetera destinatario, float monto, String categoria)throws Exception {
+    public boolean realizarTransaccion(Billetera destinatario, float monto, String categoria)throws Exception {
         if (destinatario == null) {
             throw new Exception("La billetera destinataria no existe");
         }
@@ -67,13 +67,13 @@ public class Billetera {
         }
         if  ((saldo < (monto + costo)){
                 throw new Exception("Saldo insuficiente para realizar la transacción");
-            }
+        }
 
-    //actualizar saldo en ambas billeteras
+        //actualizar saldo en ambas billeteras
         this.saldo-=(monto+costo);
         destinatario.saldo+=monto;
 
-    //registrar trasaccion
+        //registrar trasaccion
         Transaccion transaccion = new Transaccion(Transaccion.getid(),destinatario, monto, LocalDateTime.now(), categoria);
         this.transacciones.add(transaccion);
         destinatario.transacciones.add(transaccion);
@@ -81,21 +81,36 @@ public class Billetera {
         return true;
     }
 
+    //Metodo para recargar la billetera
+    public void recargarBilletera(float monto)throws Exception {
+            if (monto <=0){throw new Exception("El monto debe ser positivo");
+            }else {
+                saldo += monto;
+            }
+        }
 
-    //Metodo para actualizar el saldo
-        public float getSaldoActualizado(float monto) {
-            saldo += monto;
+    //Metodo para consultar el saldo con get
+    public Float consultarSaldo(String id, String password) {
+            if (usuario.getId().equals(id) && usuario.getPassword().equals(password)) {
             return saldo;
         }
-
-
-    //Metodo para recargar la billetera virtual
-        public void recargar(float monto) {
-            if (monto <= 0) throw new IllegalArgumentException("El monto debe ser positivo");
-            saldo += monto;
+        return null; // Retorna null si la autenticación falla
         }
+
+    //  Consultar transacciones con id y fecha
+    public ArrayList<Transaccion> consultarTransaccionesPorIdYFecha(String id, LocalDateTime fecha) {
+        ArrayList<Transaccion> resultado = new ArrayList<>();
+
+        for (Transaccion transaccion : transacciones) {
+            if (transaccion.getIdTransaccion().equals(id) && transaccion.getFecha().toLocalDate().equals(fecha.toLocalDate())) {
+                resultado.add(transaccion);
+            }
+        }
+        return resultado;
+    }
+
     //Metodo para Obtener el porcentaje de Ingresos y gastos del mes
-        public float[] obtenerPorcentajeIngresosYGastosDadoElMes(int mes, int año) {
+        public float[] obtenerPorcentajeIngresosYGastosDadoElMes(int mes) {
             float ingresos = 0;
             float egresos = 0;
             float total = 0;
@@ -103,7 +118,7 @@ public class Billetera {
             for (Transaccion transaccion : transacciones) {
                 LocalDateTime fecha = transaccion.getFecha();
 
-                if (fecha.getMonthValue() == mes && fecha.getYear() == año) {
+                if (fecha.getMonthValue() == mes) {
                     if (transaccion.getDestino().equals(this)) {
                         ingresos += transaccion.getMonto();
                     } else if (transaccion.getOrigen().equals(this)) {
@@ -116,7 +131,7 @@ public class Billetera {
             float porcentajeIngresos = total > 0 ? (ingresos / total) * 100 : 0;
             float porcentajeEgresos = total > 0 ? (egresos / total) * 100 : 0;
 
-            return new float[]{porcentajeIngresos, porcentajeEgresos};
+            return new floa[]t{porcentajeIngresos, porcentajeEgresos};
         }
 
         //  Consultar transacciones con id y fecha
